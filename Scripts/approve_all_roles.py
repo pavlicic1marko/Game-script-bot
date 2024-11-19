@@ -1,43 +1,29 @@
-import pyautogui
 import time
-import re
-import pytesseract
-from PIL import Image
-import cv2
-import numpy as np
+from POM.server_user_roles_page import *
+from Commands.Click import click_with_random_sleep_and_cordinate_variation
+
 
 # Start script on server's position selection screen.
 # NOTE: if conquerors buff is enabled, scroll down before running.
 
-def approve_applicant_list(x, y):
+def approve_applicant(coordinates):
     # Click the position card from given coordinates.
     # click the approve button location a few times. Then exit out of the position card.
-    clickSeconds1 = .65
-    clickSeconds2 = .35
 
-    # click position card
-    pyautogui.click(x, y)
-    time.sleep(clickSeconds1)
+    # click on role
+    click_with_random_sleep_and_cordinate_variation(coordinates)
+
     # click list button
-    listX = 1179
-    listY = 907
-    pyautogui.click(listX, listY)
-    time.sleep(clickSeconds1)
-    # click approve
-    approveX = 1099
-    approveY = 252
+    click_with_random_sleep_and_cordinate_variation(applicants_list_button)
+
+    # click approve in list
     for i in range(3):
-        pyautogui.click(approveX, approveY)
-        time.sleep(clickSeconds2)
-    # exit position card
-    exitX = 1208
-    exitY = 112
-    pyautogui.click(exitX, exitY)
-    time.sleep(clickSeconds2)
-    pyautogui.click(exitX, exitY)
-    time.sleep(clickSeconds1)
-    time.sleep(4)  # giving operator time to stop the script
-    return True
+        click_with_random_sleep_and_cordinate_variation(approve_applicant_button)
+
+    # exit position card to server screen
+    click_with_random_sleep_and_cordinate_variation(close_applicant_list_button)
+    click_with_random_sleep_and_cordinate_variation(close_applicant_list_button)
+    time.sleep(2)  # giving operator time to stop the script
 
 
 def main():
@@ -56,36 +42,16 @@ def main():
             (2383, 955)
         ]
 
-        staleRoleCoordinates = [
-            (2078, 485, 104, 25, 'Military Commander', 2109, 441),
-            (2184, 718, 104, 25, 'Secretary of Strategy', 2212, 677),
-            (2366, 718, 104, 25, 'Secretary of Security', 2396, 636),
-            (2002, 951, 104, 25, 'Secretary of Development', 2053, 973),
-            (2184, 951, 104, 25, 'Secretary of Science', 2209, 850)
-        ]
-    else:
-        coordinates = [
-            (956, 507),  # Secretary of Strategy...
-            (1124, 500),  # Security
-            (774, 724),  # development
-            (963, 730),  # science
-            # Note, a player liking the bot's profile makes a permanent screen appear. This may be exited via the 'Awesome' button.
-            (1144, 724)   # Interior
-        ]
-        staleRoleCoordinates = [
-            (2359, 627, 104, 40, 'Secretary of Security', 2397, 545),
-            (2175, 629, 104, 40, 'Secretary of Strategy', 2212, 535)
-        ]
-    time.sleep(5)  # giving time to get screen ready
-    i = 9
-    while True:
-        i = i + 1
-        # Iterate through the positions and approve all
-        for x, y in coordinates:
-            approve_applicant_list(x, y)
-            time.sleep(4)  # giving operator time to stop the script
 
-        time.sleep(4)  # giving operator time to stop the script
+    else:
+
+        time.sleep(2)  # giving operator time to stop the script
+        #  approve all 5
+        approve_applicant(Secretary_of_Strategy_icon)
+        approve_applicant(Secretary_of_Security_icon)
+        approve_applicant(Secretary_of_development_icon)
+        approve_applicant(Secretary_of_science_icon)
+        approve_applicant(Secretary_of_interior_icon)
 
 
 if __name__ == "__main__":
