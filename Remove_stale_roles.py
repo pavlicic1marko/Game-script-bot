@@ -32,7 +32,7 @@ def remove_stale_roles(left, top, width, height, message, x, y):
     region = (left, top, width, height)
     # Capture the screen region
     screenshot = pyautogui.screenshot(region=region)
-    screenshot.save("screenshot.png")
+    screenshot.save(message+"screenshot.png")
     # Convert the screenshot to a format suitable for pytesseract
     screenshot_rgb = cv2.cvtColor(np.array(screenshot), cv2.COLOR_BGR2RGB)
 
@@ -43,13 +43,14 @@ def remove_stale_roles(left, top, width, height, message, x, y):
     text = text_sanitization(pytesseract.image_to_string(screenshot_rgb, config=custom_config))
     # Use regular expression to find time strings in HH:mm:ss format
     pattern = r'\b\d{2}:\d{2}:\d{2}\b'
+    print("trying to match pattern :"+ pattern+ "to text: " + text)
     matches = re.findall(pattern, text)
     # Threshold in minutes
     threshold_minutes = 6
     if matches is None:
         print("{message} Screenshot returned NULL list.")
     elif not matches:
-        print(f"{message} Screenshot returned no matches. Text: {text}")
+        print(f"{message} Screenshot returned no matches. Text: {text} ")
     else:
         # Threshold in minutes
         total_minutes = time_to_minutes(matches[0])
@@ -108,11 +109,11 @@ def main():
             (2398, 769)
         ]
         staleRoleCoordinates = [
-            (930, 585, 90, 24, 'Secretary of Strategy', 956, 507),
-            #(1100, 585, 90, 24, 'Secretary of Security', 1124, 500),
-            # (1100, 580, 90, 24, 'Secretary of development', 774, 724),
-            # (1100, 580, 90, 24, 'Secretary of science', 963, 730),
-            # (1100, 580, 90, 24, 'Secretary of interior', 1144, 724),
+            (930, 590, 85, 23, 'Secretary of Strategy', 956, 507),
+            (1113, 590, 85, 23, 'Secretary of Security', 1124, 500),
+            (748, 821, 85, 23, 'Secretary of development', 774, 724),
+            (930, 821, 85, 23, 'Secretary of science', 963, 730),
+            (1111, 821, 85, 23, 'Secretary of interior', 1144, 724),
         ]
     time.sleep(5)  # giving time to get screen ready
     i = 9
