@@ -9,24 +9,6 @@ import numpy as np
 # Start script on server's position selection screen.
 # NOTE: if conquerors buff is enabled, scroll down before running.
 
-# Function to convert HH:mm:ss to total minutes
-def time_to_minutes(time_str):
-    hours, minutes, _ = map(int, time_str.split(':'))
-    return hours * 60 + minutes
-
-
-def text_sanitization(time_str):
-    if not time_str:
-        return ''
-    if time_str[:3].isdigit():
-        time_str = time_str[1:]  # Remove extra leading digit
-    parts = time_str.split(':')
-    if len(parts[2]) > 2:
-        parts[2] = parts[2][:2]  # Remove extra trailing digit
-    return ':'.join(parts)
-
-
-
 def approve_applicant_list(x, y):
     # Click the position card from given coordinates.
     # click the approve button location a few times. Then exit out of the position card.
