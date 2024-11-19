@@ -32,7 +32,7 @@ def remove_stale_roles(left, top, width, height, message, x, y):
     region = (left, top, width, height)
     # Capture the screen region
     screenshot = pyautogui.screenshot(region=region)
-    screenshot.save(message+"screenshot.png")
+    screenshot.save(message+" screenshot.png")  # save screenshot for debugging purpose
     # Convert the screenshot to a format suitable for pytesseract
     screenshot_rgb = cv2.cvtColor(np.array(screenshot), cv2.COLOR_BGR2RGB)
 
