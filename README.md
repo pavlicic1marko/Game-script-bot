@@ -11,6 +11,7 @@ install tesseract program
 add tesseract to path
 
 2.Python 
+copy repo from github
 install pip dependencies in virtual env
 
 
