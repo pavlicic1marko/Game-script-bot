@@ -2,7 +2,6 @@ import pyautogui
 import time
 import re
 import pytesseract
-from PIL import Image
 import cv2
 import numpy as np
 
@@ -56,6 +55,7 @@ def remove_stale_roles(left, top, width, height, message, x, y):
         total_minutes = time_to_minutes(matches[0])
         if total_minutes >= threshold_minutes:
             print(f"{matches[0]} {message} is greater than {threshold_minutes} minutes.")
+            """
             pyautogui.click(x, y)  # click given title card
             time.sleep(.6)
             pyautogui.click(2117, 935)  # click dismiss
@@ -69,6 +69,7 @@ def remove_stale_roles(left, top, width, height, message, x, y):
             time.sleep(.6)
             pyautogui.click(exitX, exitY)
             time.sleep(.6)
+            """
         else:
             print(f"{message} is less than {threshold_minutes} minutes.")
 
@@ -108,8 +109,10 @@ def main():
         ]
         staleRoleCoordinates = [
             (930, 585, 90, 24, 'Secretary of Strategy', 956, 507),
-            #(1100, 580, 500, 500, 'Secretary of Security', 1127, 500),
-
+            #(1100, 585, 90, 24, 'Secretary of Security', 1124, 500),
+            # (1100, 580, 90, 24, 'Secretary of development', 774, 724),
+            # (1100, 580, 90, 24, 'Secretary of science', 963, 730),
+            # (1100, 580, 90, 24, 'Secretary of interior', 1144, 724),
         ]
     time.sleep(5)  # giving time to get screen ready
     i = 9
