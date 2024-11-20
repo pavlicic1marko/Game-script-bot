@@ -15,7 +15,7 @@ pixel_click_range_negative = -2  # pixels
 
 
 def click_with_random_sleep_and_cordinate_variation(ui_location):
-    """click on a cordinate
+    """click on a coordinate
     with a random time delay and a variation of a few pixels
     """
     ui_location[0] += randint(pixel_click_range_negative, pixel_click_range_positive)
@@ -24,4 +24,9 @@ def click_with_random_sleep_and_cordinate_variation(ui_location):
     time.sleep(default_sleep_time + randint(random_sleep_time_mix, random_sleep_time_max) / 1000)
 
 
-
+def click_with_random_sleep(ui_location):
+    """click on a coordinate
+    with a random time sleep
+    """
+    pyautogui.click(ui_location)
+    time.sleep(default_sleep_time + randint(random_sleep_time_mix, random_sleep_time_max) / 1000)
