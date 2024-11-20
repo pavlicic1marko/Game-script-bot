@@ -17,6 +17,10 @@ applicants_list_button = [1179, 907]
 approve_applicant_button = [1099, 252]
 close_applicant_list_button = [1208, 112]
 
+# dismiss role
+dismiss_role_button = [841, 918]
+confirm_button = [962, 580]
+
 staleRoleCoordinates = [
     (930, 590, 'Secretary of Strategy', Secretary_of_Strategy_icon),
     (1113, 590, 'Secretary of Security', Secretary_of_Security_icon),

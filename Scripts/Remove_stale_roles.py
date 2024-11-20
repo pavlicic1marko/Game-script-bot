@@ -5,8 +5,8 @@ import pytesseract
 import cv2
 import numpy as np
 
+from Commands.Click import click_with_random_sleep_and_cordinate_variation
 from POM.server_user_roles_page import *
-from POM.server_user_roles_page import staleRoleCoordinates
 
 
 # Start script on server's position selection screen.
@@ -50,7 +50,6 @@ def remove_stale_roles(left, top, message, role_ico_cordinates):
     text = text_sanitization(pytesseract.image_to_string(screenshot_rgb, config=custom_config))
     # Use regular expression to find time strings in HH:mm:ss format
     pattern = r'\b\d{2}:\d{2}:\d{2}\b'
-    print("trying to match pattern :" + pattern + "to text: " + text)
     matches = re.findall(pattern, text)
     # Threshold in minutes
     threshold_minutes = 6
@@ -63,21 +62,19 @@ def remove_stale_roles(left, top, message, role_ico_cordinates):
         total_minutes = time_to_minutes(matches[0])
         if total_minutes >= threshold_minutes:
             print(f"{matches[0]} {message} is greater than {threshold_minutes} minutes.")
-            """
-            pyautogui.click(x, y)  # click given title card
-            time.sleep(.6)
-            pyautogui.click(2117, 935)  # click dismiss
-            time.sleep(.6)
-            pyautogui.click(2108, 610)  # click Confirm
-            time.sleep(.6)
-            # exit position card
-            exitX = 2185
-            exitY = 1079
-            pyautogui.click(exitX, exitY)
-            time.sleep(.6)
-            pyautogui.click(exitX, exitY)
-            time.sleep(.6)
-            """
+
+            # click given role
+            click_with_random_sleep_and_cordinate_variation([x,y])
+
+            # click dismiss
+            click_with_random_sleep_and_cordinate_variation(dismiss_role_button)
+
+            # click Confirm
+            click_with_random_sleep_and_cordinate_variation(confirm_button)
+
+            # exit position card to server screen
+            click_with_random_sleep_and_cordinate_variation(close_applicant_list_button)
+            click_with_random_sleep_and_cordinate_variation(close_applicant_list_button)
         else:
             print(f"{message} is less than {threshold_minutes} minutes.")
 
