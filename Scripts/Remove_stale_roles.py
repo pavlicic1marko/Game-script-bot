@@ -5,6 +5,10 @@ import pytesseract
 import cv2
 import numpy as np
 
+from Commands.Click import click_with_random_sleep_and_cordinate_variation
+from POM.server_user_roles_page import *
+
+
 # Start script on server's position selection screen.
 # NOTE: if conquerors buff is enabled, scroll down before running.
 
@@ -27,12 +31,15 @@ def text_sanitization(time_str):
     return ':'.join(parts)
 
 
-def remove_stale_roles(left, top, width, height, message, x, y):
-    # Define the region to capture (left, top, width, height)
+def remove_stale_roles(left, top, message, role_ico_cordinates):
+    x,y =role_ico_cordinates[0],role_ico_cordinates[1]
+    # Define the region to capture (left, top)
+    width = 85
+    height = 25
     region = (left, top, width, height)
     # Capture the screen region
     screenshot = pyautogui.screenshot(region=region)
-    screenshot.save(message+"screenshot.png")
+    screenshot.save(message + " screenshot.png")  # save screenshot for debugging purpose
     # Convert the screenshot to a format suitable for pytesseract
     screenshot_rgb = cv2.cvtColor(np.array(screenshot), cv2.COLOR_BGR2RGB)
 
@@ -43,7 +50,6 @@ def remove_stale_roles(left, top, width, height, message, x, y):
     text = text_sanitization(pytesseract.image_to_string(screenshot_rgb, config=custom_config))
     # Use regular expression to find time strings in HH:mm:ss format
     pattern = r'\b\d{2}:\d{2}:\d{2}\b'
-    print("trying to match pattern :"+ pattern+ "to text: " + text)
     matches = re.findall(pattern, text)
     # Threshold in minutes
     threshold_minutes = 6
@@ -56,24 +62,21 @@ def remove_stale_roles(left, top, width, height, message, x, y):
         total_minutes = time_to_minutes(matches[0])
         if total_minutes >= threshold_minutes:
             print(f"{matches[0]} {message} is greater than {threshold_minutes} minutes.")
-            """
-            pyautogui.click(x, y)  # click given title card
-            time.sleep(.6)
-            pyautogui.click(2117, 935)  # click dismiss
-            time.sleep(.6)
-            pyautogui.click(2108, 610)  # click Confirm
-            time.sleep(.6)
-            # exit position card
-            exitX = 2185
-            exitY = 1079
-            pyautogui.click(exitX, exitY)
-            time.sleep(.6)
-            pyautogui.click(exitX, exitY)
-            time.sleep(.6)
-            """
+
+            # click given role
+            click_with_random_sleep_and_cordinate_variation([x,y])
+
+            # click dismiss
+            click_with_random_sleep_and_cordinate_variation(dismiss_role_button)
+
+            # click Confirm
+            click_with_random_sleep_and_cordinate_variation(confirm_button)
+
+            # exit position card to server screen
+            click_with_random_sleep_and_cordinate_variation(close_applicant_list_button)
+            click_with_random_sleep_and_cordinate_variation(close_applicant_list_button)
         else:
             print(f"{message} is less than {threshold_minutes} minutes.")
-
 
 
 def main():
@@ -81,18 +84,8 @@ def main():
     conquerorsBuff = False
     # list of coordinates for each position card, ordered Mil Cmdr to Sec Interior top left to bottom right
     if conquerorsBuff:
-        coordinates = [
-            (2109, 441),  # Military Commander
-            (2316, 425),  # Administration Commander
-            (2212, 677),  # Secretary of Strategy...
-            (2396, 636),
-            (2053, 973),
-            (2209, 850),
-            # Note, a player liking the bot's profile makes a permanent screen appear. This may be exited via the "Awesome" button.
-            (2383, 955)
-        ]
 
-        staleRoleCoordinates = [
+        staleRoleCoordinatess = [
             (2078, 485, 104, 25, 'Military Commander', 2109, 441),
             (2184, 718, 104, 25, 'Secretary of Strategy', 2212, 677),
             (2366, 718, 104, 25, 'Secretary of Security', 2396, 636),
@@ -100,30 +93,12 @@ def main():
             (2184, 951, 104, 25, 'Secretary of Science', 2209, 850)
         ]
     else:
-        coordinates = [
-            (2212, 535),  # Secretary of Strategy...
-            (2397, 545),
-            (2025, 770),
-            (2209, 850),
-            # Note, a player liking the bot's profile makes a permanent screen appear. This may be exited via the 'Awesome' button.
-            (2398, 769)
-        ]
-        staleRoleCoordinates = [
-            (930, 590, 85, 23, 'Secretary of Strategy', 956, 507),
-            (1113, 590, 85, 23, 'Secretary of Security', 1124, 500),
-            (748, 821, 85, 23, 'Secretary of development', 774, 724),
-            (930, 821, 85, 23, 'Secretary of science', 963, 730),
-            (1111, 821, 85, 23, 'Secretary of interior', 1144, 724),
-        ]
+        for role in staleRoleCoordinates:
+            top,left,message,role_ico_cordinates = role
+            remove_stale_roles(top, left, message, role_ico_cordinates)
+
+
     time.sleep(5)  # giving time to get screen ready
-    i = 9
-    while True:
-        i = i + 1
-        if i % 10 == 0:
-            # Iterate through positions to check for stale activity
-            for left, top, width, height, message, x, y in staleRoleCoordinates:
-                remove_stale_roles(left, top, width, height, message, x, y)
-        time.sleep(4)  # giving operator time to stop the script
 
 
 if __name__ == "__main__":
