@@ -26,7 +26,7 @@ def approve_applicant(coordinates):
     time.sleep(2)  # giving operator time to stop the script
 
 
-def main():
+def approve_all_users():
     # Conquerors Buff includes two additional position cards. Set to False if conquerors buff is disabled.
     conquerorsBuff = False
     # list of coordinates for each position card, ordered Mil Cmdr to Sec Interior top left to bottom right
@@ -55,4 +55,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    approve_all_users()

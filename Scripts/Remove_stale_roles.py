@@ -79,7 +79,7 @@ def remove_stale_roles(left, top, message, role_ico_cordinates):
             print(f"{message} is less than {threshold_minutes} minutes.")
 
 
-def main():
+def remove_all_stale_roles():
     # Conquerors Buff includes two additional position cards. Set to False if conquerors buff is disabled.
     conquerorsBuff = False
     # list of coordinates for each position card, ordered Mil Cmdr to Sec Interior top left to bottom right
@@ -102,4 +102,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    remove_all_stale_roles()
