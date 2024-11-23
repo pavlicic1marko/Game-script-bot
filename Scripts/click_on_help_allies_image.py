@@ -14,3 +14,7 @@ def help_allies():
             print("image not found")
 
         time.sleep(60)
+
+
+if __name__ == "__main__":
+    help_allies()
