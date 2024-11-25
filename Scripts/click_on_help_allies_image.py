@@ -7,7 +7,7 @@ def help_allies():
     number_of_clicks = 0
     while True:
         try:
-            click_on_image('hellp_allies_button.png')
+            click_on_image('images/hellp_allies_button.png')
             number_of_clicks += 1
             print("clicked: " + str(number_of_clicks))
         except pyautogui.ImageNotFoundException:
