@@ -5,6 +5,9 @@ $pyinstaller --name botLW --onefile --windowed --icon=build-files\\icon.ico main
 2.use inno setup:
 --create a ino setup .iss file
 --select executable from dist folder, add "image" directory for application files
---edit  Files Source for images , add "/images"
+--edit  Files Source for images , add "/images" "/logs"
 
 
+version 1.0:
+--tkinter, tesseracts, pyautogui.locateOnScreen()image
+--folders: logs, images
