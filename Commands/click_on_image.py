@@ -1,5 +1,5 @@
 from Commands.Click import *
-from images_location import get_image_folder_path
+from Scripts import logging_commands
 import os
 import sys
 
@@ -19,16 +19,35 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
+image_folder_full_screen="images\\full_screen\\"
+image_folder_maximize="images\\maximise_screen\\"
+
 def click_on_image(image_name):
-    image_cordinates = pyautogui.locateOnScreen(resource_path(image_name),
-    region=region, confidence=0.8, grayscale=True)
-    x,y = pyautogui.center(image_cordinates)
-    click_with_random_sleep_and_cordinate_variation([x,y])
+    try:
+        image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_full_screen +  image_name),
+        region=region, confidence=0.7, grayscale=True)
+        x,y = pyautogui.center(image_cordinates)
+        click_with_random_sleep_and_cordinate_variation([x,y])
+    except pyautogui.ImageNotFoundException:
+        logging_commands.log_info('try with different resolution')
+        image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_maximize +  image_name),
+        region=region, confidence=0.7, grayscale=True)
+        x,y = pyautogui.center(image_cordinates)
+        click_with_random_sleep_and_cordinate_variation([x,y])
 
 
 def click_on_exact_image(image_name):
-    image_cordinates = pyautogui.locateOnScreen(get_image_folder_path() + image_name,
+    image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_maximize + image_name) ,
     region=region, confidence=1, grayscale=True)
     click_with_random_sleep(image_cordinates)
+
+def click_on_image_if_visible(image_name):
+    try:
+        image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_maximize +  image_name),
+        region=region, confidence=0.8, grayscale=True)
+        x, y = pyautogui.center(image_cordinates)
+        click_with_random_sleep_and_cordinate_variation([x, y])
+    except pyautogui.ImageNotFoundException:
+        logging_commands.log_info('no one to approve')
 
 
