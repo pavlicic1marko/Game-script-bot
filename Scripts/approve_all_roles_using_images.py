@@ -13,12 +13,12 @@ def approve_all_5_roles():
 
 
 def approve_role(role_name):
-    click_on_image('images\\maximise_screen\\' + role_name)
-    click_on_image('images\\maximise_screen\\list_button.png')
-    click_on_image_if_visible('images\\maximise_screen\\Approve_from_list_button.png')
-    click_on_image('images\\maximise_screen\\close.PNG')
+    click_on_image( role_name)
+    click_on_image('list_button.png')
+    click_on_image_if_visible('Approve_from_list_button.png')
+    click_on_image('close.PNG')
     pyautogui.moveTo(400, 400)
-    click_on_image('images\\maximise_screen\\close.png')
+    click_on_image('close.png')
 
 
 if __name__ == "__main__":
