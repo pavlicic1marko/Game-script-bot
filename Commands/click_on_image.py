@@ -1,7 +1,5 @@
-from pyscreeze import ImageNotFoundException
-
 from Commands.Click import *
-from images_location import get_image_folder_path
+from Scripts import logging_commands
 import os
 import sys
 
@@ -31,7 +29,7 @@ def click_on_image(image_name):
         x,y = pyautogui.center(image_cordinates)
         click_with_random_sleep_and_cordinate_variation([x,y])
     except pyautogui.ImageNotFoundException:
-        print("try with different resolution")
+        logging_commands.log_info('try with different resolution')
         image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_maximize +  image_name),
         region=region, confidence=0.7, grayscale=True)
         x,y = pyautogui.center(image_cordinates)
@@ -50,6 +48,6 @@ def click_on_image_if_visible(image_name):
         x, y = pyautogui.center(image_cordinates)
         click_with_random_sleep_and_cordinate_variation([x, y])
     except pyautogui.ImageNotFoundException:
-        print("no one to approve")
+        logging_commands.log_info('no one to approve')
 
 
