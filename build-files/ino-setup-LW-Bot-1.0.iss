@@ -28,9 +28,9 @@ ArchitecturesAllowed=x64compatible
 ; the 64-bit view of the registry.
 ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
-LicenseFile=C:\Users\MP\PycharmProjects\Build_Bot_App\build-files\LICENSE
-InfoBeforeFile=C:\Users\MP\PycharmProjects\Build_Bot_App\build-files\setup_Info
-InfoAfterFile=C:\Users\MP\PycharmProjects\Build_Bot_App\build-files\after_Installation_info
+LicenseFile=C:\Users\MP\PycharmProjects\Build_Bot_App\build-files\LICENSE.txt
+InfoBeforeFile=C:\Users\MP\PycharmProjects\Build_Bot_App\build-files\setup_Info.txt
+InfoAfterFile=C:\Users\MP\PycharmProjects\Build_Bot_App\build-files\after_Installation_info.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputDir=C:\Users\MP\OneDrive\Desktop
@@ -49,8 +49,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "C:\Users\MP\PycharmProjects\Build_Bot_App\dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\MP\PycharmProjects\Build_Bot_App\dist\logs\*"; DestDir: "{app}/logs"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\MP\PycharmProjects\Build_Bot_App\dist\images\*"; DestDir: "{app}/images"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\MP\PycharmProjects\Build_Bot_App\logs\*"; DestDir: "{app}/logs"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\MP\PycharmProjects\Build_Bot_App\images\*"; DestDir: "{app}/images"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
