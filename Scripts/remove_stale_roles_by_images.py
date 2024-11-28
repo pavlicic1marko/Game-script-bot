@@ -1,17 +1,23 @@
 import os
 import re
 import sys
-import easyocr
 
-import cv2
+import PIL
+import easyocr
+import numpy
 import numpy as np
 import pyautogui
-import pytesseract
 
 from Commands.click_on_image import click_on_image, region
 
 image_folder_full_screen="images\\full_screen\\"
 image_folder_maximize="images\\maximise_screen\\"
+
+reader = easyocr.Reader(['en'])
+
+def time_to_minutes(time_str):
+    hours, minutes, _ = map(int, time_str.split('.'))
+    return hours * 60 + minutes
 
 def text_sanitization(time_str):
     print("timme:" + time_str)
@@ -45,28 +51,34 @@ def remove_stale_user():
 
     # Capture the screen region
     screenshot = pyautogui.screenshot(region=region2)
-    screenshot.save( " screenshot.png")  # save screenshot for debugging purpose
+    # read text from immage
 
-    # Convert the screenshot to a format suitable for pytesseract
-    screenshot_rgb = cv2.cvtColor(np.array(screenshot), cv2.COLOR_BGR2RGB)
+    result = reader.readtext(np.array(screenshot))[0][1]
 
-    # Define OCR configuration options
-    custom_config = r'--oem 3 --psm 6 -c tessedit_char_whitelist=0123456789:'
+    # save screenshot for debugging purpose
+    screenshot.save( " screenshot.png")
 
-    # Extract text with custom configuration
-    text = text_sanitization(pytesseract.image_to_string(screenshot_rgb, config=custom_config))
     # Use regular expression to find time strings in HH:mm:ss format
-    pattern = r'\b\d{2}:\d{2}:\d{2}\b'
+    #pattern = r'\b\d{2}.\d{2}.\d{2}\b'
+    #matches = re.findall(pattern, result)
 
-    matches = re.findall(pattern, text)
-    # Threshold in minutes
+
+
+
+
     threshold_minutes = 6
+    print(result)
+    if not result:
 
-    if not matches:
         print("the bot did not find the time")
+
+
     else:
         pass
         #i f time > 6
+        minutes = time_to_minutes(result)
+        print(minutes)
+
 
 
 if __name__ == "__main__":
