@@ -3,7 +3,9 @@ import sys
 import time
 import pyautogui
 from Commands.click_on_image import click_on_image
-import logging_commands
+from Scripts import logging_commands
+
+
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     try:
