@@ -5,7 +5,8 @@ import time
 import easyocr
 import numpy as np
 import pyautogui
-from Commands.click_on_image import click_on_image_with_Very_high_confidence, region
+from Commands.click_on_image import click_on_image_with_Very_high_confidence, region, click_on_image_if_visible, \
+    find_image_on_screen
 
 threshold_minutes = 6
 
@@ -36,9 +37,10 @@ def remove_stale_user(role_image):
     time.sleep(1)
 
     # find location of the image on screen
-    image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_maximize + 'time_in_office_text.png'),
-                                                region=region, confidence=0.8, grayscale=True)
+    #image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_full_screen + 'time_in_office_text.png'),
+                                                #region=region, confidence=0.8, grayscale=True)
 
+    image_cordinates = find_image_on_screen('time_in_office_text.png',0.8)
     # region 2 is the image of the time user is in a role, next to the image time_in_office_text.png
     region2 = (int(image_cordinates.left) + image_cordinates.width, int(image_cordinates.top), image_cordinates.width,
                image_cordinates.height)
@@ -101,11 +103,19 @@ if __name__ == "__main__":
             remove_stale_user('secretary_of_interior.png')
             print(i)
             time.sleep(5)
-        except:
+        except pyautogui.ImageNotFoundException:
             number_of_exceptions += 1
             print("there was an exception trying to go back to server screen, the exception number is: ",
                   number_of_exceptions)
             # go_back_to_server_screen()
-            click_on_image_with_Very_high_confidence('close.PNG')
+            click_on_image_if_visible('close.PNG','')
+            click_on_image_if_visible('back_button_blue.png','')
+            click_on_image_if_visible('back_button_gray.PNG','')
+            click_on_image_if_visible('back_button_see_through.PNG','')
+            click_on_image_if_visible('close_profile_button.PNG','')
+            click_on_image_if_visible('close.png','')
+
+
+
             if number_of_exceptions > 5:
                 break
