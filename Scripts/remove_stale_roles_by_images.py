@@ -1,14 +1,15 @@
 import os
 import re
 import sys
-
+import time
 import PIL
 import easyocr
 import numpy
 import numpy as np
 import pyautogui
-
 from Commands.click_on_image import click_on_image, region
+
+threshold_minutes = 6
 
 image_folder_full_screen="images\\full_screen\\"
 image_folder_maximize="images\\maximise_screen\\"
@@ -41,8 +42,8 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-def remove_stale_user():
-    click_on_image('secretary_of_strategy.png')
+def remove_stale_user(role_image):
+    click_on_image(role_image)
     image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_maximize + 'time_in_office_text.png'),
     region=region, confidence=0.8, grayscale=True)
     print(image_cordinates)
@@ -53,33 +54,45 @@ def remove_stale_user():
     screenshot = pyautogui.screenshot(region=region2)
     # read text from immage
 
-    result = reader.readtext(np.array(screenshot))[0][1]
+    time_on_screen = reader.readtext(np.array(screenshot))[0][1]
+    time_on_screen = time_on_screen.replace(":",".")
+    time_on_screen = time_on_screen.replace(",",".")
+    time_on_screen = time_on_screen.replace(";",".")
+    time_on_screen = time_on_screen.replace("'",".")
+
+
+
 
     # save screenshot for debugging purpose
     screenshot.save( " screenshot.png")
 
-    # Use regular expression to find time strings in HH:mm:ss format
-    #pattern = r'\b\d{2}.\d{2}.\d{2}\b'
-    #matches = re.findall(pattern, result)
 
 
 
 
 
-    threshold_minutes = 6
-    print(result)
-    if not result:
-
+    print(time_on_screen)
+    if not time_on_screen:
         print("the bot did not find the time")
 
-
     else:
-        pass
-        #i f time > 6
-        minutes = time_to_minutes(result)
-        print(minutes)
+        minutes = time_to_minutes(time_on_screen)
+        print("the number of minutes is: " + str(minutes))
+
+        if minutes > threshold_minutes:
+            print("time is more than 6 minutes")
+        else:
+            print("time is less than 6 minutes")
+        click_on_image('close.PNG')
 
 
 
 if __name__ == "__main__":
-    remove_stale_user()
+    while True:
+        remove_stale_user('secretary_of_strategy.png')
+        remove_stale_user('secretary_of_security.png')
+        remove_stale_user('secretary_of_development.png')
+        remove_stale_user('secretary_of_science.png')
+        remove_stale_user('secretary_of_interior.png')
+        time.sleep(5)
+
