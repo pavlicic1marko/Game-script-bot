@@ -25,13 +25,13 @@ image_folder_maximize="images\\maximise_screen\\"
 def click_on_image(image_name):
     try:
         image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_full_screen +  image_name),
-        region=region, confidence=0.7, grayscale=True)
+        region=region, confidence=0.95, grayscale=True)
         x,y = pyautogui.center(image_cordinates)
         click_with_random_sleep_and_cordinate_variation([x,y])
     except pyautogui.ImageNotFoundException:
         logging_commands.log_info('try with different resolution')
         image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_maximize +  image_name),
-        region=region, confidence=0.7, grayscale=True)
+        region=region, confidence=0.90, grayscale=True)
         x,y = pyautogui.center(image_cordinates)
         click_with_random_sleep_and_cordinate_variation([x,y])
 
