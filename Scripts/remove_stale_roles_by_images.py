@@ -1,4 +1,5 @@
 import os
+import random
 import re
 import sys
 import time
@@ -108,14 +109,15 @@ if __name__ == "__main__":
             print("there was an exception trying to go back to server screen, the exception number is: ",
                   number_of_exceptions)
             # go_back_to_server_screen()
+            pyautogui.screenshot(str(random.randint(10000000,90000000)) + 'last_screenshot.png')
             click_on_image_if_visible('close.PNG','')
             click_on_image_if_visible('back_button_blue.png','')
             click_on_image_if_visible('back_button_gray.PNG','')
             click_on_image_if_visible('back_button_see_through.PNG','')
             click_on_image_if_visible('close_profile_button.PNG','')
-            click_on_image_if_visible('close.png','')
-
 
 
             if number_of_exceptions > 5:
                 break
+
+pyautogui.screenshot('last_screenshot.png')
