@@ -5,7 +5,7 @@ import time
 import easyocr
 import numpy as np
 import pyautogui
-from Commands.click_on_image import click_on_image, region
+from Commands.click_on_image import click_on_image_with_Very_high_confidence, region
 
 threshold_minutes = 6
 
@@ -32,7 +32,7 @@ def resource_path(relative_path):
 
 
 def remove_stale_user(role_image):
-    click_on_image(role_image)
+    click_on_image_with_Very_high_confidence(role_image)
     time.sleep(1)
 
     # find location of the image on screen
@@ -81,11 +81,11 @@ def remove_stale_user(role_image):
 
         else:
             print("time is less than 6 minutes")
-        click_on_image('close.PNG')
+        click_on_image_with_Very_high_confidence('close.PNG')
 
     else:
         print("the bot did not find the time")
-        click_on_image('close.PNG')
+        click_on_image_with_Very_high_confidence('close.PNG')
 
 
 if __name__ == "__main__":
@@ -106,6 +106,6 @@ if __name__ == "__main__":
             print("there was an exception trying to go back to server screen, the exception number is: ",
                   number_of_exceptions)
             # go_back_to_server_screen()
-            click_on_image('close.PNG')
+            click_on_image_with_Very_high_confidence('close.PNG')
             if number_of_exceptions > 5:
                 break

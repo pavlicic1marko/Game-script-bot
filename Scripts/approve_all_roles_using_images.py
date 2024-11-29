@@ -2,7 +2,7 @@ import os
 import sys
 import time
 import pyautogui
-from Commands.click_on_image import click_on_image, click_on_image_if_visible
+from Commands.click_on_image import click_on_image_with_Very_high_confidence, click_on_image_if_visible
 from Scripts import logging_commands
 
 
@@ -29,12 +29,12 @@ def approve_all_5_roles():
 
 
 def approve_role(role_name):
-    click_on_image( role_name)
-    click_on_image('list_button.png')
-    click_on_image_if_visible('Approve_from_list_button.png')
-    click_on_image('close.PNG')
+    click_on_image_with_Very_high_confidence(role_name)
+    click_on_image_with_Very_high_confidence('list_button.png')
+    click_on_image_if_visible('Approve_from_list_button.png','no one to approve')
+    click_on_image_with_Very_high_confidence('close.PNG')
     pyautogui.moveTo(400, 400)
-    click_on_image('close.png')
+    click_on_image_with_Very_high_confidence('close.png')
 
 
 if __name__ == "__main__":
