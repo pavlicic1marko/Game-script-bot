@@ -2,7 +2,6 @@ from tkinter import *
 from Scripts.Remove_stale_roles import remove_all_stale_roles
 from Scripts.approve_all_roles import approve_all_users
 from Scripts.click_on_help_allies_image import  help_allies
-from Scripts.test_easyoscr import analize_using_easyocr
 
 root = Tk()
 root.title('Game Bot')
@@ -31,12 +30,7 @@ canvas.create_window(200,200, window=app_label)
 remove_roles = Button(root, text='Remove users', command=remove_all_stale_roles)
 canvas.create_window(200, 225, window=remove_roles)
 
-# button description
-app_label = Label(root, text="analyze image using ocr", fg='blue', font=('Arial', 11))
-canvas.create_window(200,275, window=app_label)
-# button remove roles
-remove_roles = Button(root, text='analyze time', command=analize_using_easyocr)
-canvas.create_window(200, 300, window=remove_roles)
+
 
 # loop
 root.mainloop()
