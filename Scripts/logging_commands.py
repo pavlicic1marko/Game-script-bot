@@ -2,7 +2,7 @@ import os
 import sys
 import logging
 logger = logging.getLogger(__name__)
-log_to_file = False
+log_to_file = True
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
