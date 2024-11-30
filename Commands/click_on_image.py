@@ -95,3 +95,19 @@ def find_image_on_screen(image_name, confidence):
                                                     region=region, confidence=confidence, grayscale=True)
 
         return image_cordinates
+
+def try_find_image_on_screen(image_name, confidence):
+    try:
+        image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_full_screen + image_name),
+                                                    region=region, confidence=confidence, grayscale=True)
+
+        return image_cordinates
+
+    except pyautogui.ImageNotFoundException:
+        try:
+            image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_maximize + image_name),
+                                                    region=region, confidence=confidence, grayscale=True)
+            return image_cordinates
+        except pyautogui.ImageNotFoundException:
+            return False
+

@@ -7,7 +7,8 @@ import easyocr
 import numpy as np
 import pyautogui
 from Commands.click_on_image import click_on_image_with_Very_high_confidence, region, click_on_image_if_visible, \
-    find_image_on_screen
+    find_image_on_screen, try_find_image_on_screen
+from Scripts.logging_commands import log_info
 
 threshold_minutes = 6
 
@@ -21,6 +22,13 @@ def time_to_minutes(time_str):
     hours, minutes, _ = map(int, time_str.split(':'))
     return hours * 60 + minutes
 
+def clean_up_ocr_text(time_on_screen):
+    time_on_screen = time_on_screen.replace(".", ":")
+    time_on_screen = time_on_screen.replace(",", ":")
+    time_on_screen = time_on_screen.replace(";", ":")
+    time_on_screen = time_on_screen.replace("'", ":")
+
+    return time_on_screen
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -33,6 +41,10 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
+def is_role_vacant():
+    return try_find_image_on_screen('vacant.png',0.8)
+
+
 def remove_stale_user(role_image):
     click_on_image_with_Very_high_confidence(role_image)
     time.sleep(1)
@@ -40,34 +52,35 @@ def remove_stale_user(role_image):
     # find location of the image on screen
     #image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_full_screen + 'time_in_office_text.png'),
                                                 #region=region, confidence=0.8, grayscale=True)
+    # TODO if role is vacant
+    if is_role_vacant():
+        log_info('role is vacant')
+        matches =''
+    else:
+        image_cordinates = find_image_on_screen('time_in_office_text.png', 0.8)
+        # region 2 is the image of the time user is in a role, next to the image time_in_office_text.png
+        region2 = (
+        int(image_cordinates.left) + image_cordinates.width, int(image_cordinates.top), image_cordinates.width,
+        image_cordinates.height)
 
-    image_cordinates = find_image_on_screen('time_in_office_text.png',0.8)
-    # region 2 is the image of the time user is in a role, next to the image time_in_office_text.png
-    region2 = (int(image_cordinates.left) + image_cordinates.width, int(image_cordinates.top), image_cordinates.width,
-               image_cordinates.height)
+        # Capture the screen region
+        screenshot = pyautogui.screenshot(region=region2)
 
-    # Capture the screen region
-    screenshot = pyautogui.screenshot(region=region2)
+        try:
+            # read text from immage using easyocr
+            time_on_screen = reader.readtext(np.array(screenshot))[0][1]
+        except IndexError:
+            # if unable to find time close pop-up in next step, if matches will evaluate to false
+            time_on_screen = ""
 
-    try:
-        # read text from immage using easyocr
-        time_on_screen = reader.readtext(np.array(screenshot))[0][1]
-    except IndexError:
-        # if unable to find time close pop-up in next step, if matches will evaluate to false
-        time_on_screen = ""
+        #  easy ocr  can make a mistake with ':' character
+        time_on_screen = clean_up_ocr_text(time_on_screen)
 
-    #  easy ocr  can make a mistake with ':' character
-    time_on_screen = time_on_screen.replace(".", ":")
-    time_on_screen = time_on_screen.replace(",", ":")
-    time_on_screen = time_on_screen.replace(";", ":")
-    time_on_screen = time_on_screen.replace("'", ":")
+        # test if the paatern is found
+        pattern = r'\b\d{2}:\d{2}:\d{2}\b'
+        matches = re.findall(pattern, time_on_screen)
 
-    # test if the paatern is found
-    pattern = r'\b\d{2}:\d{2}:\d{2}\b'
-    matches = re.findall(pattern, time_on_screen)
-
-    # save screenshot for debugging purpose
-    screenshot.save(" screenshot.png")
+        # save screenshot for debugging purpose
 
     print(matches)
     if matches:
@@ -80,7 +93,7 @@ def remove_stale_user(role_image):
             #  click on confirm
             #  click on close
             #  click on close
-            time.sleep(5)
+            time.sleep(1)
 
         else:
             print("time is less than 6 minutes")
@@ -97,27 +110,31 @@ if __name__ == "__main__":
     while True:
         try:
             i += 1
-            remove_stale_user('secretary_of_strategy.png')
-            remove_stale_user('secretary_of_security.png')
-            remove_stale_user('secretary_of_development.png')
+            #remove_stale_user('secretary_of_strategy.png')
+            #remove_stale_user('secretary_of_security.png')
+            #remove_stale_user('secretary_of_development.png')
             remove_stale_user('secretary_of_science.png')
             remove_stale_user('secretary_of_interior.png')
             print(i)
             time.sleep(5)
         except pyautogui.ImageNotFoundException:
+            pyautogui.screenshot('first_screenshot.png')
+
             number_of_exceptions += 1
             print("there was an exception trying to go back to server screen, the exception number is: ",
                   number_of_exceptions)
             # go_back_to_server_screen()
-            pyautogui.screenshot(str(random.randint(10000000,90000000)) + 'last_screenshot.png')
-            click_on_image_if_visible('close.PNG','')
-            click_on_image_if_visible('back_button_blue.png','')
-            click_on_image_if_visible('back_button_gray.PNG','')
-            click_on_image_if_visible('back_button_see_through.PNG','')
-            click_on_image_if_visible('close_profile_button.PNG','')
+            pyautogui.screenshot(str(number_of_exceptions) + 'screenshot.png')
 
 
-            if number_of_exceptions > 5:
+            #click_on_image_if_visible('close.PNG','')
+            #click_on_image_if_visible('back_button_blue.png','')
+            #click_on_image_if_visible('back_button_gray.PNG','')
+            #click_on_image_if_visible('back_button_see_through.PNG','')
+            #click_on_image_if_visible('close_profile_button.PNG','')
+
+
+            if number_of_exceptions > 3:
                 break
 
 pyautogui.screenshot('last_screenshot.png')
