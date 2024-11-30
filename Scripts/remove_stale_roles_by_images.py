@@ -22,6 +22,7 @@ def time_to_minutes(time_str):
     hours, minutes, _ = map(int, time_str.split(':'))
     return hours * 60 + minutes
 
+
 def clean_up_ocr_text(time_on_screen):
     time_on_screen = time_on_screen.replace(".", ":")
     time_on_screen = time_on_screen.replace(",", ":")
@@ -29,6 +30,7 @@ def clean_up_ocr_text(time_on_screen):
     time_on_screen = time_on_screen.replace("'", ":")
 
     return time_on_screen
+
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -42,26 +44,36 @@ def resource_path(relative_path):
 
 
 def is_role_vacant():
-    return try_find_image_on_screen('vacant.png',0.8)
+    return try_find_image_on_screen('vacant.png', 0.8)
+
+
+def is_time_valid(time_string):
+    if any(char not in '0123456789:' for char in time_string):
+        return False
+    else:
+        return True
+
+
+print(is_time_valid('123,123'))
 
 
 def remove_stale_user(role_image):
     click_on_image_with_Very_high_confidence(role_image)
     time.sleep(1)
+    pyautogui.screenshot('time_in_role_screenshot.png')
 
     # find location of the image on screen
-    #image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_full_screen + 'time_in_office_text.png'),
-                                                #region=region, confidence=0.8, grayscale=True)
-    # TODO if role is vacant
+    # image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_full_screen + 'time_in_office_text.png'),
+    # region=region, confidence=0.8, grayscale=True)
     if is_role_vacant():
         log_info('role is vacant')
-        matches =''
+        matches = ''
     else:
         image_cordinates = find_image_on_screen('time_in_office_text.png', 0.8)
         # region 2 is the image of the time user is in a role, next to the image time_in_office_text.png
         region2 = (
-        int(image_cordinates.left) + image_cordinates.width, int(image_cordinates.top), image_cordinates.width,
-        image_cordinates.height)
+            int(image_cordinates.left) + image_cordinates.width, int(image_cordinates.top), image_cordinates.width,
+            image_cordinates.height)
 
         # Capture the screen region
         screenshot = pyautogui.screenshot(region=region2)
@@ -77,13 +89,17 @@ def remove_stale_user(role_image):
         time_on_screen = clean_up_ocr_text(time_on_screen)
 
         # test if the paatern is found
-        pattern = r'\b\d{2}:\d{2}:\d{2}\b'
-        matches = re.findall(pattern, time_on_screen)
+        # check if time is valid
+        if (is_time_valid(time_on_screen)):
+            print('time is valid')
+        else:
+            time_on_screen = ''
 
-        # save screenshot for debugging purpose
+    # test if the paatern is found
+    pattern = r'\b\d{2}:\d{2}:\d{2}\b'
+    matches = re.findall(pattern, time_on_screen)
 
-    print(matches)
-    if matches:
+    if time_on_screen and matches:
         minutes = time_to_minutes(time_on_screen)
         print("the number of minutes is: " + str(minutes))
 
@@ -110,9 +126,9 @@ if __name__ == "__main__":
     while True:
         try:
             i += 1
-            #remove_stale_user('secretary_of_strategy.png')
-            #remove_stale_user('secretary_of_security.png')
-            #remove_stale_user('secretary_of_development.png')
+            remove_stale_user('secretary_of_strategy.png')
+            remove_stale_user('secretary_of_security.png')
+            remove_stale_user('secretary_of_development.png')
             remove_stale_user('secretary_of_science.png')
             remove_stale_user('secretary_of_interior.png')
             print(i)
@@ -126,13 +142,11 @@ if __name__ == "__main__":
             # go_back_to_server_screen()
             pyautogui.screenshot(str(number_of_exceptions) + 'screenshot.png')
 
-
-            #click_on_image_if_visible('close.PNG','')
-            #click_on_image_if_visible('back_button_blue.png','')
-            #click_on_image_if_visible('back_button_gray.PNG','')
-            #click_on_image_if_visible('back_button_see_through.PNG','')
-            #click_on_image_if_visible('close_profile_button.PNG','')
-
+            click_on_image_if_visible('close.PNG', '')
+            # click_on_image_if_visible('back_button_blue.png','')
+            # click_on_image_if_visible('back_button_gray.PNG','')
+            # click_on_image_if_visible('back_button_see_through.PNG','')
+            # click_on_image_if_visible('close_profile_button.PNG','')
 
             if number_of_exceptions > 3:
                 break
