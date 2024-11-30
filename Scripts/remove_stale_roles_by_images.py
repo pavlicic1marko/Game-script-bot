@@ -8,6 +8,7 @@ import numpy as np
 import pyautogui
 from Commands.click_on_image import click_on_image_with_Very_high_confidence, region, click_on_image_if_visible, \
     find_image_on_screen, try_find_image_on_screen
+from Scripts.go_to_screen import try_to_go_to_3_main_screens
 from Scripts.logging_commands import log_info
 
 threshold_minutes = 6
@@ -142,11 +143,7 @@ if __name__ == "__main__":
             # go_back_to_server_screen()
             pyautogui.screenshot(str(number_of_exceptions) + 'screenshot.png')
 
-            click_on_image_if_visible('close.PNG', '')
-            # click_on_image_if_visible('back_button_blue.png','')
-            # click_on_image_if_visible('back_button_gray.PNG','')
-            # click_on_image_if_visible('back_button_see_through.PNG','')
-            # click_on_image_if_visible('close_profile_button.PNG','')
+            try_to_go_to_3_main_screens()
 
             if number_of_exceptions > 3:
                 break
