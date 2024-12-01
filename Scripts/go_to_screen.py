@@ -43,7 +43,4 @@ def find_profile_button_location():
     image_cordinates_heros_center_with = image_cordinates_heros[0] + image_cordinates_heros[2] / 2
     return [image_cordinates_heros_center_with, image_cordinates_mall_center_height]
 
-go_to_base_screen_from_world_screen()
-go_to_server_screen_from_base_screen()
 
-# try_to_go_to_3_main_screens()

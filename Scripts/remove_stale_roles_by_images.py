@@ -8,7 +8,8 @@ import numpy as np
 import pyautogui
 from Commands.click_on_image import click_on_image_with_Very_high_confidence, region, click_on_image_if_visible, \
     find_image_on_screen, try_find_image_on_screen
-from Scripts.go_to_screen import try_to_go_to_3_main_screens
+from Scripts.go_to_screen import try_to_go_to_3_main_screens, find_screen_name, go_to_base_screen_from_world_screen, \
+    go_to_server_screen_from_base_screen
 from Scripts.logging_commands import log_info
 
 threshold_minutes = 6
@@ -69,6 +70,7 @@ def remove_stale_user(role_image):
     if is_role_vacant():
         log_info('role is vacant')
         matches = ''
+        time_on_screen=''
     else:
         image_cordinates = find_image_on_screen('time_in_office_text.png', 0.8)
         # region 2 is the image of the time user is in a role, next to the image time_in_office_text.png
@@ -96,9 +98,9 @@ def remove_stale_user(role_image):
         else:
             time_on_screen = ''
 
-    # test if the paatern is found
-    pattern = r'\b\d{2}:\d{2}:\d{2}\b'
-    matches = re.findall(pattern, time_on_screen)
+        # test if the paatern is found
+        pattern = r'\b\d{2}:\d{2}:\d{2}\b'
+        matches = re.findall(pattern, time_on_screen)
 
     if time_on_screen and matches:
         minutes = time_to_minutes(time_on_screen)
@@ -140,10 +142,17 @@ if __name__ == "__main__":
             number_of_exceptions += 1
             print("there was an exception trying to go back to server screen, the exception number is: ",
                   number_of_exceptions)
-            # go_back_to_server_screen()
+
             pyautogui.screenshot(str(number_of_exceptions) + 'screenshot.png')
 
             try_to_go_to_3_main_screens()
+            if find_screen_name() == 'world':
+                go_to_base_screen_from_world_screen()
+                go_to_server_screen_from_base_screen()
+            if find_screen_name() == 'base':
+                go_to_server_screen_from_base_screen()
+
+
 
             if number_of_exceptions > 3:
                 break
