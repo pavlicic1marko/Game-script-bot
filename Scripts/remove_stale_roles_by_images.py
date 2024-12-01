@@ -134,7 +134,7 @@ if __name__ == "__main__":
             remove_stale_user('secretary_of_development.png')
             remove_stale_user('secretary_of_science.png')
             remove_stale_user('secretary_of_interior.png')
-            print(i)
+            print("the number of loops is:",i)
             time.sleep(5)
         except pyautogui.ImageNotFoundException:
             pyautogui.screenshot('first_screenshot.png')
@@ -154,7 +154,7 @@ if __name__ == "__main__":
 
 
 
-            if number_of_exceptions > 3:
+            if number_of_exceptions > 100:
                 break
 
 pyautogui.screenshot('last_screenshot.png')
