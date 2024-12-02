@@ -20,13 +20,23 @@ def try_to_go_to_3_main_screens():
     print("user is on screen:", find_screen_name())
     for i in range(1, 4):
         image_list = ['back_button_blue.PNG', 'back_button_blue.png', 'back_button_gray.PNG',
-                      'back_button_see_through.PNG', 'close_profile_button.PNG']
-        if not (find_screen_name()):
+                      'back_button_see_through.PNG', 'close_profile_button.PNG', 'awesome.png', 'base_button_zoom_out.png']
+
+        if not (find_screen_name()): # if not(iuser on 3 main screens), if not try to get to these screens
             for image in image_list:
                 if not (find_screen_name()):
                     click_on_image_if_visible(image, image)
 
+        if not (find_screen_name()): # if not(iuser on 3 main screens), if not try to get to these screens, if user clicked on a base or a monster
+            click_on_image_if_visible('mall_button.png','mall_button.png')
+            click_on_image_if_visible('back_button_see_through.png','mall_button.png')
+
+
+
     print("user is on screen:", find_screen_name())
+
+    # move mouse to random coordinates in case mause is over button
+    move_mouse_to_random_cordinates()
 
 
 def go_to_server_screen_from_base_screen():
