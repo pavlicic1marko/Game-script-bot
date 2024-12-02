@@ -1,8 +1,15 @@
-1. In order for the app to run without any issues you shouldL
+1. In order for the app to run without any issues you should:
 a. set display resolution to 1920 x 1080
 b. set the scale to 125%
 c. set your app window to full screen
 
-2. In order to stop the bot, click on stop button or move your mouse to any corner of your screen
+2. In order to stop the bot:
+ click on stop button
+ or move your mouse to any corner of your screen
+
+3. LW Bot has counter-detection measures:
+a. randomize clik pixels on screen
+b. randomized wait times between clicks
+c. randomized flows
 
 have fun :)
