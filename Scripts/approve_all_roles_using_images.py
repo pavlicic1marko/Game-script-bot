@@ -4,6 +4,7 @@ import time
 import pyautogui
 from Commands.click_on_image import click_on_image_with_Very_high_confidence, click_on_image_if_visible
 from Scripts import logging_commands
+from Scripts.logging_commands import log_screen_shoot
 
 
 def resource_path(relative_path):
@@ -43,3 +44,5 @@ if __name__ == "__main__":
         approve_all_5_roles()
         i +=1
         logging_commands.log_info('loop number: ' + str(i))
+
+log_screen_shoot('last_screenshot')

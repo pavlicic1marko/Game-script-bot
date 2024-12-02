@@ -10,7 +10,7 @@ from Commands.click_on_image import click_on_image_with_Very_high_confidence, re
     find_image_on_screen, try_find_image_on_screen
 from Scripts.go_to_screen import try_to_go_to_3_main_screens, find_screen_name, go_to_base_screen_from_world_screen, \
     go_to_server_screen_from_base_screen
-from Scripts.logging_commands import log_info
+from Scripts.logging_commands import log_info, log_screen_shoot
 
 threshold_minutes = 6
 
@@ -137,13 +137,13 @@ if __name__ == "__main__":
             print("the number of loops is:",i)
             time.sleep(5)
         except pyautogui.ImageNotFoundException:
-            pyautogui.screenshot('first_screenshot.png')
+            log_screen_shoot('first_screenshot.png')
 
             number_of_exceptions += 1
             print("there was an exception trying to go back to server screen, the exception number is: ",
                   number_of_exceptions)
 
-            pyautogui.screenshot(str(number_of_exceptions) + 'screenshot.png')
+            log_screen_shoot(str(number_of_exceptions) + 'screenshot.png')
 
             try_to_go_to_3_main_screens()
             if find_screen_name() == 'world':
@@ -157,4 +157,4 @@ if __name__ == "__main__":
             if number_of_exceptions > 100:
                 break
 
-pyautogui.screenshot('last_screenshot.png')
+log_screen_shoot('last_screenshot.png')

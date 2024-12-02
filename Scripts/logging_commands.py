@@ -1,6 +1,9 @@
 import os
 import sys
 import logging
+
+import pyautogui
+
 logger = logging.getLogger(__name__)
 log_to_file = False
 
@@ -21,3 +24,6 @@ def log_info(message:str):
         logger.info(message)
     else:
         print(message)
+
+def log_screen_shoot(screen_shot_name):
+    pyautogui.screenshot(resource_path('logs\\'+screen_shot_name+'.png'))
