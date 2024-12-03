@@ -20,7 +20,8 @@ def try_to_go_to_3_main_screens():
     print("user is on screen:", find_screen_name())
     for i in range(1, 4):
         image_list = ['back_button_blue.PNG', 'back_button_blue.png', 'back_button_gray.PNG',
-                      'back_button_see_through.PNG', 'close_profile_button.PNG', 'awesome.png', 'base_button_zoom_out.png']
+                      'back_button_see_through.PNG', 'close_profile_button.PNG', 'awesome.png',
+                      'base_button_zoom_out.png','hero_pop_up_addvertisment.png']
 
         if not (find_screen_name()): # if not(iuser on 3 main screens), if not try to get to these screens
             for image in image_list:
