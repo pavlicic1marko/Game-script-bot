@@ -1,6 +1,7 @@
 import pyautogui
 
 from Commands.click_on_image import *
+from Scripts.logging_commands import log_info
 
 
 def find_screen_name():
@@ -17,7 +18,7 @@ def find_screen_name():
 
 
 def try_to_go_to_3_main_screens():
-    print("user is on screen:", find_screen_name())
+    log_info("user is on screen:" + find_screen_name())
     for i in range(1, 4):
         image_list = ['back_button_blue.PNG', 'back_button_blue.png', 'back_button_gray.PNG',
                       'back_button_see_through.PNG', 'close_profile_button.PNG', 'awesome.png',
@@ -34,7 +35,7 @@ def try_to_go_to_3_main_screens():
 
 
 
-    print("user is on screen:", find_screen_name())
+    log_info("user is on screen:" + find_screen_name())
 
     # move mouse to random coordinates in case mause is over button
     move_mouse_to_random_cordinates()

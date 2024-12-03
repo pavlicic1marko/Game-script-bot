@@ -70,7 +70,7 @@ def remove_stale_user(role_image):
     if is_role_vacant():
         log_info('role is vacant')
         matches = ''
-        time_on_screen=''
+        time_on_screen = ''
     else:
         image_cordinates = find_image_on_screen('time_in_office_text.png', 0.8)
         # region 2 is the image of the time user is in a role, next to the image time_in_office_text.png
@@ -134,14 +134,14 @@ if __name__ == "__main__":
             remove_stale_user('secretary_of_development.png')
             remove_stale_user('secretary_of_science.png')
             remove_stale_user('secretary_of_interior.png')
-            print("the number of loops is:",i)
+            print("the number of loops is:", i)
             time.sleep(5)
         except pyautogui.ImageNotFoundException:
             log_screen_shoot('first_screenshot.png')
 
             number_of_exceptions += 1
-            print("there was an exception trying to go back to server screen, the exception number is: ",
-                  number_of_exceptions)
+            log_info("there was an exception trying to go back to server screen, the exception number is: " +
+                     str(number_of_exceptions))
 
             log_screen_shoot(str(number_of_exceptions) + 'screenshot.png')
 
@@ -151,8 +151,6 @@ if __name__ == "__main__":
                 go_to_server_screen_from_base_screen()
             if find_screen_name() == 'base':
                 go_to_server_screen_from_base_screen()
-
-
 
             if number_of_exceptions > 100:
                 break

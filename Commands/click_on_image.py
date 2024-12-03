@@ -41,7 +41,7 @@ def try_to_click_on_immage_and_on_smaller_resolution(image_name, confidence: [in
         x, y = pyautogui.center(image_cordinates)
         click_with_random_sleep_and_cordinate_variation([x, y])
     except pyautogui.ImageNotFoundException:
-        logging_commands.log_info('try with different resolution')
+        logging_commands.log_info('try with different resolution for image: ' + image_name)
         image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_maximize + image_name),
                                                     region=region, confidence=confidence, grayscale=True)
         x, y = pyautogui.center(image_cordinates)

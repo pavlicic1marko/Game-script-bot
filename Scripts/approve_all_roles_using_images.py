@@ -4,7 +4,7 @@ import time
 import pyautogui
 from Commands.click_on_image import click_on_image_with_Very_high_confidence, click_on_image_if_visible
 from Scripts import logging_commands
-from Scripts.logging_commands import log_screen_shoot
+from Scripts.logging_commands import log_screen_shoot, log_info
 
 
 def resource_path(relative_path):
@@ -30,11 +30,12 @@ def approve_all_5_roles():
 
 
 def approve_role(role_name):
+    log_info('approve user with role: ' + role_name)
     click_on_image_with_Very_high_confidence(role_name)
     click_on_image_with_Very_high_confidence('list_button.png')
     click_on_image_if_visible('Approve_from_list_button.png','no one to approve')
     click_on_image_with_Very_high_confidence('close.PNG')
-    pyautogui.moveTo(400, 400)
+    pyautogui.moveTo(400, 400) # TODO add comment
     click_on_image_with_Very_high_confidence('close.png')
 
 
@@ -43,6 +44,6 @@ if __name__ == "__main__":
     while True:
         approve_all_5_roles()
         i +=1
-        logging_commands.log_info('loop number: ' + str(i))
+        log_info('loop number: ' + str(i))
 
 log_screen_shoot('last_screenshot')
