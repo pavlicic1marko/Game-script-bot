@@ -4,6 +4,8 @@ import time
 import pyautogui
 from Commands.click_on_image import click_on_image_with_Very_high_confidence, click_on_image_if_visible
 from Scripts import logging_commands
+from Scripts.go_to_screen import try_to_go_to_3_main_screens, find_screen_name, go_to_base_screen_from_world_screen, \
+    go_to_server_screen_from_base_screen
 from Scripts.logging_commands import log_screen_shoot, log_info
 
 
@@ -41,9 +43,25 @@ def approve_role(role_name):
 
 if __name__ == "__main__":
     i = 0
+    number_of_exceptions = 0
     while True:
-        approve_all_5_roles()
-        i +=1
-        log_info('loop number: ' + str(i))
+        try:
+            approve_all_5_roles()
+            i +=1
+            log_info('loop number: ' + str(i))
+        except pyautogui.ImageNotFoundException:
+            log_screen_shoot('first_screenshot.png')
+
+            try_to_go_to_3_main_screens()
+            if find_screen_name() == 'world':
+                go_to_base_screen_from_world_screen()
+                go_to_server_screen_from_base_screen()
+            if find_screen_name() == 'base':
+                go_to_server_screen_from_base_screen()
+
+            if number_of_exceptions > 100:
+                break
+
+
 
 log_screen_shoot('last_screenshot')

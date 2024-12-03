@@ -134,7 +134,7 @@ if __name__ == "__main__":
             remove_stale_user('secretary_of_development.png')
             remove_stale_user('secretary_of_science.png')
             remove_stale_user('secretary_of_interior.png')
-            log_info("the number of loops is:", i)
+            log_info("the number of loops is:" + str(i))
             time.sleep(5)
         except pyautogui.ImageNotFoundException:
             log_screen_shoot('first_screenshot.png')
