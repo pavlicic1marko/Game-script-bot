@@ -62,7 +62,7 @@ print(is_time_valid('123,123'))
 def remove_stale_user(role_image):
     click_on_image_with_Very_high_confidence(role_image)
     time.sleep(1)
-    pyautogui.screenshot('time_in_role_screenshot.png')
+    log_screen_shoot('time_in_role_screenshot')
 
     # find location of the image on screen
     # image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_full_screen + 'time_in_office_text.png'),
@@ -94,7 +94,7 @@ def remove_stale_user(role_image):
         # test if the paatern is found
         # check if time is valid
         if (is_time_valid(time_on_screen)):
-            print('time is valid')
+            log_info('time is valid')
         else:
             time_on_screen = ''
 
@@ -104,10 +104,10 @@ def remove_stale_user(role_image):
 
     if time_on_screen and matches:
         minutes = time_to_minutes(time_on_screen)
-        print("the number of minutes is: " + str(minutes))
+        log_info("the number of minutes is: " + str(minutes))
 
         if minutes > threshold_minutes:
-            print("time is more than 6 minutes")
+            log_info("time is more than 6 minutes")
             #  click on dismiss
             #  click on confirm
             #  click on close
@@ -115,11 +115,11 @@ def remove_stale_user(role_image):
             time.sleep(1)
 
         else:
-            print("time is less than 6 minutes")
+            log_info("time is less than 6 minutes")
         click_on_image_with_Very_high_confidence('close.PNG')
 
     else:
-        print("the bot did not find the time")
+        log_info("the bot did not find the time")
         click_on_image_with_Very_high_confidence('close.PNG')
 
 
@@ -134,7 +134,7 @@ if __name__ == "__main__":
             remove_stale_user('secretary_of_development.png')
             remove_stale_user('secretary_of_science.png')
             remove_stale_user('secretary_of_interior.png')
-            print("the number of loops is:", i)
+            log_info("the number of loops is:", i)
             time.sleep(5)
         except pyautogui.ImageNotFoundException:
             log_screen_shoot('first_screenshot.png')
@@ -143,7 +143,7 @@ if __name__ == "__main__":
             log_info("there was an exception trying to go back to server screen, the exception number is: " +
                      str(number_of_exceptions))
 
-            log_screen_shoot(str(number_of_exceptions) + 'screenshot.png')
+            log_screen_shoot(str(number_of_exceptions) + 'screenshot')
 
             try_to_go_to_3_main_screens()
             if find_screen_name() == 'world':
@@ -155,4 +155,4 @@ if __name__ == "__main__":
             if number_of_exceptions > 100:
                 break
 
-log_screen_shoot('last_screenshot.png')
+log_screen_shoot('last_screenshot')
