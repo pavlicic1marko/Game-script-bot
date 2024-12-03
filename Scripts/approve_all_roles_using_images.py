@@ -2,7 +2,8 @@ import os
 import sys
 import time
 import pyautogui
-from Commands.click_on_image import click_on_image_with_Very_high_confidence, click_on_image_if_visible
+from Commands.click_on_image import click_on_image_with_Very_high_confidence, click_on_image_if_visible, \
+    click_on_image_with_high_confidence
 from Scripts import logging_commands
 from Scripts.go_to_screen import try_to_go_to_3_main_screens, find_screen_name, go_to_base_screen_from_world_screen, \
     go_to_server_screen_from_base_screen
@@ -33,8 +34,8 @@ def approve_all_5_roles():
 
 def approve_role(role_name):
     log_info('approve user with role: ' + role_name)
-    click_on_image_with_Very_high_confidence(role_name)
-    click_on_image_with_Very_high_confidence('list_button.png')
+    click_on_image_with_high_confidence(role_name)
+    click_on_image_with_high_confidence('list_button.png')
     click_on_image_if_visible('Approve_from_list_button.png','no one to approve')
     click_on_image_with_Very_high_confidence('close.PNG')
     pyautogui.moveTo(400, 400) # TODO add comment

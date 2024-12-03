@@ -7,7 +7,7 @@ import easyocr
 import numpy as np
 import pyautogui
 from Commands.click_on_image import click_on_image_with_Very_high_confidence, region, click_on_image_if_visible, \
-    find_image_on_screen, try_find_image_on_screen
+    find_image_on_screen, try_find_image_on_screen, click_on_image_with_high_confidence
 from Scripts.go_to_screen import try_to_go_to_3_main_screens, find_screen_name, go_to_base_screen_from_world_screen, \
     go_to_server_screen_from_base_screen
 from Scripts.logging_commands import log_info, log_screen_shoot
@@ -60,7 +60,7 @@ print(is_time_valid('123,123'))
 
 
 def remove_stale_user(role_image):
-    click_on_image_with_Very_high_confidence(role_image)
+    click_on_image_with_high_confidence(role_image)
     time.sleep(1)
     log_screen_shoot('time_in_role_screenshot')
 
