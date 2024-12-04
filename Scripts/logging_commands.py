@@ -5,7 +5,7 @@ import logging
 import pyautogui
 
 logger = logging.getLogger(__name__)
-log_to_file = False  # if False print on screen
+log_to_file = False  # if False print on screen, True log on file
 
 
 def resource_path(relative_path):
