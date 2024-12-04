@@ -1,29 +1,22 @@
-import subprocess
-import tkinter as tk
-
-proclist = []
-
-
-def clicked():
-    proclist.clear()
-    script = 'approve_all_roles_using_images.py'
-    proc = subprocess.Popen(['python', script])
-    proclist.append(proc)
+import multiprocessing
+import os
+from click_on_help_allies_image import help_allies
 
 
-def kill_tasks():
-    proc=proclist[0]
-    if proc and proc.poll() is None:
-        print('Killing process with PID', proc.pid)
-        proc.kill()
-    proclist.clear()
+def example_function():
+    help_allies()
 
 
-root = tk.Tk()
-root.geometry('400x400')
-root.title('Last War Bot')
+if __name__ == "__main__":
+    # Create a new process
+    process = multiprocessing.Process(target=example_function)
 
-tk.Button(root, text='Start 1st lady Approve', width=20, command=clicked).pack()
-tk.Button(root, text='Stop', width=20, command=kill_tasks).pack()
+    # Start the process
+    process.start()
 
-root.mainloop()
+    # Print the PID of the process
+    print(f"Started process with PID: {process.pid}")
+
+    # Wait for the process to finish
+    process.join()
+    print("Process completed.")
