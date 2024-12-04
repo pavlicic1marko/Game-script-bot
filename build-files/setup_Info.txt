@@ -1,2 +1,7 @@
-This program is used for the game LW
-It is used to help you play the game
+This program is used for the game LW, it is used to help you play the game.
+The app will be installed in your program files directory, in the LW BOT directory
+
+inside  LW BOT folder there will be 2 folders created images and logs. In the logs file you will be able to see logs of your bot.
+What commands the bot executed.
+
+This Bot was tested for the following emulators/programs : BlueStack, LdPlayer, MEmu

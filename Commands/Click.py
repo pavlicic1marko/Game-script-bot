@@ -30,3 +30,8 @@ def click_with_random_sleep(ui_location):
     """
     pyautogui.click(ui_location)
     time.sleep(default_sleep_time + randint(random_sleep_time_mix, random_sleep_time_max) / 1000)
+
+def move_mouse_to_random_cordinates():
+    x = randint(1,500)
+    y = randint(1, 500)
+    pyautogui.moveTo([x, y])

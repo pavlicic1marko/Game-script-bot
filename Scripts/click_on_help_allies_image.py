@@ -2,8 +2,9 @@ import os
 import sys
 import time
 import pyautogui
-from Commands.click_on_image import click_on_image
+from Commands.click_on_image import click_on_image_with_Very_high_confidence
 from Scripts import logging_commands
+from Scripts.logging_commands import log_info
 
 
 def resource_path(relative_path):
@@ -23,11 +24,11 @@ def help_allies():
     while True:
         try:
             logging_commands.log_info('Started help_allies script')
-            click_on_image('help_allies_button.png')
+            click_on_image_with_Very_high_confidence('help_allies_button.png')
             number_of_clicks += 1
-            print("clicked: " + str(number_of_clicks))
+            log_info("clicked: " + str(number_of_clicks))
         except pyautogui.ImageNotFoundException:
-            print("image not found")
+            log_info("image not found")
 
         time.sleep(60)
 
