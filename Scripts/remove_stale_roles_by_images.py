@@ -12,10 +12,9 @@ from Scripts.go_to_screen import try_to_go_to_3_main_screens, find_screen_name, 
     go_to_server_screen_from_base_screen
 from Scripts.logging_commands import log_info, log_screen_shoot
 
-threshold_minutes = 6
+threshold_minutes = 6 # remove a role if >=
 
-image_folder_full_screen = "images\\full_screen\\"
-image_folder_maximize = "images\\maximise_screen\\"
+
 
 reader = easyocr.Reader(['en'])
 
@@ -26,6 +25,7 @@ def time_to_minutes(time_str):
 
 
 def clean_up_ocr_text(time_on_screen):
+    """ sometimes easyocr reads ':' as '.' from immage """
     time_on_screen = time_on_screen.replace(".", ":")
     time_on_screen = time_on_screen.replace(",", ":")
     time_on_screen = time_on_screen.replace(";", ":")
@@ -46,6 +46,7 @@ def resource_path(relative_path):
 
 
 def is_role_vacant():
+    """ if image is not found return false """
     return try_find_image_on_screen('vacant.png', 0.8)
 
 
@@ -56,7 +57,6 @@ def is_time_valid(time_string):
         return True
 
 
-print(is_time_valid('123,123'))
 
 
 def remove_stale_user(role_image):
@@ -64,9 +64,7 @@ def remove_stale_user(role_image):
     time.sleep(1)
     log_screen_shoot('time_in_role_screenshot')
 
-    # find location of the image on screen
-    # image_cordinates = pyautogui.locateOnScreen(resource_path(image_folder_full_screen + 'time_in_office_text.png'),
-    # region=region, confidence=0.8, grayscale=True)
+
     if is_role_vacant():
         log_info('role is vacant')
         matches = ''
@@ -91,14 +89,13 @@ def remove_stale_user(role_image):
         #  easy ocr  can make a mistake with ':' character
         time_on_screen = clean_up_ocr_text(time_on_screen)
 
-        # test if the paatern is found
         # check if time is valid
         if (is_time_valid(time_on_screen)):
             log_info('time is valid')
         else:
             time_on_screen = ''
 
-        # test if the paatern is found
+        # test if the paatern is found: 2digits:2digits:2digits
         pattern = r'\b\d{2}:\d{2}:\d{2}\b'
         matches = re.findall(pattern, time_on_screen)
 
