@@ -106,8 +106,8 @@ def remove_stale_user(role_image):
         minutes = time_to_minutes(time_on_screen)
         log_info("the number of minutes is: " + str(minutes))
 
-        if minutes > threshold_minutes:
-            log_info("time is more than 6 minutes")
+        if minutes >= threshold_minutes:
+            log_info("time is more than 6 minutes, remove role")
             #  click on dismiss
             #  click on confirm
             #  click on close
