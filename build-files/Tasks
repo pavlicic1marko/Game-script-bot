@@ -1,3 +1,4 @@
-Bugs:
+Bugs/improvements:
 1. boot requests a buff
 2. randomized time , use distribution
+3. double close buttons are visible, handle that exception
