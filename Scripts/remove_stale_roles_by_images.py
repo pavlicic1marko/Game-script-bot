@@ -137,6 +137,7 @@ if __name__ == "__main__":
             log_info("the number of loops is:" + str(i))
             time.sleep(5)
         except pyautogui.ImageNotFoundException:
+            # handle image exceptions
             log_screen_shoot('first_screenshot.png')
 
             number_of_exceptions += 1

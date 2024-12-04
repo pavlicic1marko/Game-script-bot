@@ -42,15 +42,29 @@ def try_to_go_to_3_main_screens():
 
 
 def go_to_server_screen_from_base_screen():
-    click_with_random_sleep_and_cordinate_variation(find_profile_button_location())
-    click_on_image_if_visible('server_button.png', "click on server button")
+    profile_cordinates = find_profile_button_location()
+    if (profile_cordinates == False):
+        return False
+    click_with_random_sleep_and_cordinate_variation(profile_cordinates)
+
+    time.sleep(1) # sometimes server pop-up loads slow
+    try:
+        try_to_click_on_immage_and_on_smaller_resolution('server_button.png', 0.8)
+    except pyautogui.ImageNotFoundException:
+        return False
+
 
 def go_to_base_screen_from_world_screen():
     try_to_click_on_immage_and_on_smaller_resolution('base_button.png',0.9)
 
 def find_profile_button_location():
-    image_cordinates_mall = find_image_on_screen('mall_button.png', 0.9)
-    image_cordinates_heros = find_image_on_screen('heros_label.png', 0.9)
+    image_cordinates_mall = try_find_image_on_screen('mall_button.png', 0.9)
+    image_cordinates_heros = try_find_image_on_screen('heros_label.png', 0.9)
+
+    #if cordinates for one of the images is not found return None
+    if (image_cordinates_heros == False or image_cordinates_mall == False):
+        return False
+
     image_cordinates_mall_center_height = image_cordinates_mall[1] + image_cordinates_mall[3] / 2
     image_cordinates_heros_center_with = image_cordinates_heros[0] + image_cordinates_heros[2] / 2
     return [image_cordinates_heros_center_with, image_cordinates_mall_center_height]
