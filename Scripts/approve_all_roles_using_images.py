@@ -40,9 +40,9 @@ def approve_role(role_name):
     click_on_image_with_Very_high_confidence('close.PNG')
     pyautogui.moveTo(400, 400) # TODO add comment
     click_on_image_with_Very_high_confidence('close.png')
+    time.sleep(2)
 
-
-if __name__ == "__main__":
+def approve_5_role_and_handel_exceptions():
     i = 0
     number_of_exceptions = 0
     while True:
@@ -62,7 +62,9 @@ if __name__ == "__main__":
 
             if number_of_exceptions > 100:
                 break
+    log_screen_shoot('last_screenshot')
 
 
+if __name__ == "__main__":
+    approve_5_role_and_handel_exceptions()
 
-log_screen_shoot('last_screenshot')
