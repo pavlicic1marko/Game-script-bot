@@ -42,6 +42,7 @@ class ProcessControllerApp:
 
 
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
     root = tk.Tk()
     app = ProcessControllerApp(root)
     root.mainloop()
