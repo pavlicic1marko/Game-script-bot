@@ -1,3 +1,6 @@
+import pyautogui
+import pyscreeze
+
 from Commands.Click import *
 from Scripts import logging_commands
 import os
@@ -31,6 +34,20 @@ def click_on_image_if_visible(image_name, comment_if_image_not_visible):
         try_to_click_on_immage_and_on_smaller_resolution(image_name,confidence)
     except pyautogui.ImageNotFoundException:
         logging_commands.log_info(comment_if_image_not_visible)
+
+def click_on_all_found_image_matches(image_name, confidence):
+
+    try:
+        matches = pyautogui.locateAllOnScreen(resource_path(image_folder_full_screen + image_name),
+                                                         confidence=confidence, grayscale=True)
+
+        for x in matches:
+            print(x)
+            time.sleep(1)
+            pyautogui.click(x)
+    except pyscreeze.ImageNotFoundException:
+        print("not a single instance was found")
+
 
 
 
