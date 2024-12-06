@@ -53,6 +53,7 @@ class ProcessControllerApp:
 
 
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
     root = tk.Tk()
     app = ProcessControllerApp(root)
     canvas = tk.Canvas(root, width=600, height=100)
