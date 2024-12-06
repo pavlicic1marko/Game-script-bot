@@ -12,9 +12,7 @@ from Scripts.go_to_screen import try_to_go_to_3_main_screens, find_screen_name, 
     go_to_server_screen_from_base_screen
 from Scripts.logging_commands import log_info, log_screen_shoot
 
-threshold_minutes = 6 # remove a role if >=
-
-
+threshold_minutes = 6  # remove a role if >=
 
 reader = easyocr.Reader(['en'])
 
@@ -57,13 +55,10 @@ def is_time_valid(time_string):
         return True
 
 
-
-
 def remove_stale_user(role_image):
     click_on_image_with_high_confidence(role_image)
     time.sleep(1)
     log_screen_shoot('time_in_role_screenshot')
-
 
     if is_role_vacant():
         log_info('role is vacant')
@@ -120,10 +115,10 @@ def remove_stale_user(role_image):
         click_on_image_with_Very_high_confidence('close.PNG')
 
 
-if __name__ == "__main__":
+def remove_stale_roles_and_handel_exception():
     i = 0
     number_of_exceptions = 0
-    while True:
+    while i<1:
         try:
             i += 1
             remove_stale_user('secretary_of_strategy.png')
@@ -150,7 +145,10 @@ if __name__ == "__main__":
             if find_screen_name() == 'base':
                 go_to_server_screen_from_base_screen()
 
-            if number_of_exceptions > 100:
+            if number_of_exceptions > 10:
                 break
+    log_screen_shoot('last_screenshot')
 
-log_screen_shoot('last_screenshot')
+
+if __name__ == "__main__":
+    remove_stale_roles_and_handel_exception()

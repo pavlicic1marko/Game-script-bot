@@ -51,13 +51,15 @@ def approve_role(role_name):
 def approve_5_role_and_handel_exceptions():
     i = 0
     number_of_exceptions = 0
-    while True:
+    while i<1:
         try:
-            approve_all_5_roles()
             i +=1
+            approve_all_5_roles()
             log_info('loop number: ' + str(i))
         except pyautogui.ImageNotFoundException:
             log_screen_shoot('first_screenshot.png')
+            number_of_exceptions += 1
+
 
             try_to_go_to_3_main_screens()
             if find_screen_name() == 'world':
@@ -66,7 +68,7 @@ def approve_5_role_and_handel_exceptions():
             if find_screen_name() == 'base':
                 go_to_server_screen_from_base_screen()
 
-            if number_of_exceptions > 100:
+            if number_of_exceptions > 10:
                 break
     log_screen_shoot('last_screenshot')
 

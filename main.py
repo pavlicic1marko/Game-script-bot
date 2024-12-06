@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import multiprocessing
 from Scripts.approve_all_roles_using_images import  approve_5_role_and_handel_exceptions
+from  Scripts.first_lady_remove_and_approve import first_lady_approve_and_remove_roles
 
 window_title = "First Lady Approve Bot"
 
@@ -35,7 +36,7 @@ class ProcessControllerApp:
             messagebox.showinfo("Info", f"FL Bot is already running, PID: {self.process.pid}.")
             return
 
-        self.process = multiprocessing.Process(target=approve_5_role_and_handel_exceptions)
+        self.process = multiprocessing.Process(target=first_lady_approve_and_remove_roles)
         self.process.start()
 
     def stop_process(self):
