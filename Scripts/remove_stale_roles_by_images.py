@@ -101,9 +101,13 @@ def remove_stale_user(role_image):
         if minutes >= threshold_minutes:
             log_info("time is more than 6 minutes, remove role")
             #  click on dismiss
+            click_on_image_with_high_confidence('confirm_button_x.png')
             #  click on confirm
+            click_on_image_with_high_confidence('dismiss_button_x.png')
             #  click on close
+            click_on_image_with_Very_high_confidence('close.PNG')
             #  click on close
+            click_on_image_with_Very_high_confidence('close.PNG')
             time.sleep(1)
 
         else:
