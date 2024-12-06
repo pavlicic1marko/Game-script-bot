@@ -37,7 +37,6 @@ class ProcessControllerApp:
 
         self.process = multiprocessing.Process(target=approve_5_role_and_handel_exceptions)
         self.process.start()
-        messagebox.showinfo("Info", "Started FL Bot.")
 
     def stop_process(self):
         """Terminates the process using its PID."""
