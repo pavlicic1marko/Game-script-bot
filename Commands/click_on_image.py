@@ -4,9 +4,9 @@ import os
 import sys
 
 top = 0
-left = 655
+left = 355
 height = 1079
-wight = 609
+wight = 909
 region = (left, top, wight, height)  # game screen dimensions
 
 
