@@ -36,9 +36,15 @@ def approve_role(role_name):
     log_info('approve user with role: ' + role_name)
     click_on_image_with_high_confidence(role_name)
     click_on_image_with_high_confidence('list_button.png')
+
+    # 3 times if there are multiple users in the list
+    click_on_image_if_visible('Approve_from_list_button.png','no one to approve')
+    click_on_image_if_visible('Approve_from_list_button.png','no one to approve')
     click_on_image_if_visible('Approve_from_list_button.png','no one to approve')
     click_on_image_with_Very_high_confidence('close.PNG')
-    pyautogui.moveTo(400, 400) # TODO add comment
+
+    # move to in case the mose pointer i above close button
+    pyautogui.moveTo(400, 400)
     click_on_image_with_Very_high_confidence('close.png')
     time.sleep(2)
 
